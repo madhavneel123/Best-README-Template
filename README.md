@@ -82,84 +82,60 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+This project is about development of multitasking kernel/Operating System using Intel's Protected mode. 
+Real Mode - Legacy Mode by Intel
+Protected Mode - VM, Addresses, Memory, Paging.
+Kernel development. binariy files, ELF files
+Multitasking kernel
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
-
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-### Built With
-
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+
+### Memory
+Memory is a piece of hardware that allows computers to store information. 
+RAM is your computer's main memory, here programs can read and write information. It is a temporary storage, so all data is lost as soon as you power down your computer.
+ROM is a form of memory that can only be read from. ROM cannot be written through normal means. ROM is permanent storage and will maintain its data after power loss. ROM is generally used for storing permanent programs that will never change. BIOS is stored on a ROM. 
+
+### Boot Process
+1. BIOS is executed directly from ROM
+2. BIOS loads the bootloader into address 0x7C00
+3. The Bootloader loads the kernel. Kernel will loads our esentials pieces of Operating system
+
+Bootloader is a small program responsible for loading the kernel of an operating system. Linux has GRUB as bootloader. So bootloaders job is to load kernel to memory switches the processor into 32-bit protected mode and then executes our kernel. Bootloader uses functions presents in BIOS to assist itself. 
+
+BIOS loads the bootloader. Bootloader loads the operating system. 
+
+BIOS is executed directly from ROM. The BIOS loads itself into RAM and then continues execution from RAM. BIOS will initalize essential hardware. The BIOS looks for a bootloader to boot by searching all storage mediums for a boot signature "0x55AA". If BIOS finds that signature it will load that sector (block of storage) into address 0x7C00 and will then execute from that address running our bootloader. Storage medius can include USB sticks, Floopy drive, CDs, Hard disk.
+
+BIOS will load first sector of first hard disk. They will look for 511 and 512 byte. If those bytes match the boot signature 0x55AA then BIOS has found a bootable medium then it will load that in 0x7C00 and it will start executing from there. If BIOS cannot find a bootable medium it cannot do anything else. USB pen drive is bootable if its first sector last two bytes are 0x55AA. The BIOS loads the bootloader into RAM at absoulte address 0x7C00. The BIOS insturct the process to perform a jump to absolute address 0x7C00 and begin executing the operating system bootloader.
+
+BIOS is a Kernel in its self. The BIOS contains routines to assist our bootloader in booting our kernel. The BIOS is 16 bit code which means only 16 bit code can execute it properly. The BIOS routines are generic and a standard. 
 
 ### Prerequisites
+1. Assembly Language
+2. C Programming Language
+3. Operating System
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+We need Linux Machine with Intel architecture for this project
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-5. Change git remote url to avoid accidental pushes to base project
-   ```sh
-   git remote set-url origin github_username/repo_name
-   git remote -v # confirm the changes
-   ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
+1. sudo apt update
+2. We need to install assembler - sudo apt install nasm. Verify using nasm -v.
+3. We need an emulator to run our bootloader and kernel. sudo apt install qemu-system-x86. Verify using qemu-system-x86_64.
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Real Mode Intel Architecture
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
